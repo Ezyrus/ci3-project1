@@ -1,0 +1,54 @@
+ /* default datatable button styles  */
+ .dataTables_wrapper .dt-buttons button {
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.dataTables_wrapper .dt-buttons button:hover {
+  color: white;
+  background-color: orange !important;
+}
+
+.dataTables_wrapper .dt-buttons .buttons-copy {
+  color: black;
+  background-color: yellow;
+}
+
+.dataTables_wrapper .dt-buttons .buttons-excel {
+  color: black;
+  background-color: yellow;
+}
+
+.dataTables_wrapper .dt-buttons .buttons-pdf {
+  color: black;
+  background-color: yellow;
+}
+
+.dataTables_wrapper .dt-buttons .buttons-colvis {
+  color: black;
+  background-color: yellow;
+}
+
+.dataTables_wrapper .dt-button-collection .buttons-columnVisibility {
+  color: black;
+}
+
+.dataTables_wrapper .dt-buttons .filter-btn {
+  color: black;
+  background-color: yellow;
+}
+
+.dataTables_wrapper .dt-button-collection .dt-button {
+  color: black !important; /* Change the text color of the dropdown items */
+}
+
+
+.dataTables_wrapper .dt-buttons .add-btn {
+  background-color: green;
+}
+
+.dataTables_wrapper .dt-buttons .reload-btn {
+  background-color: blue;
+}
+/* default datatable button styles  */
