@@ -54,42 +54,31 @@ class Admin extends CI_Controller
         if (!$this->session->userdata('logged_in')) {
             redirect('admin/adminLogin');
         } else {
-            $data['admin_username'] = $this->session->userdata('admin_username');
-            $data['admin_fullname'] = $this->session->userdata('admin_fullname');
-            $data['admin_id'] = $this->session->userdata('admin_id');
-
             $this->load->view("inc/resources_header");
             $this->load->view("inc/admin_navigation");
-            $this->load->view('pages/admin/dashboard', $data);
+            $this->load->view('pages/admin/dashboard');
             $this->load->view('inc/admin_footer');
         }
     }
 
-    public function createAdmin()
+    public function administrators()
     {
-        $data = [
-            'username' => $this->input->post('admin_username'),
-            'password' => md5($this->input->post('admin_password'))
-        ];
-        $this->Administrator_model->createAdmin($data);
+        if (!$this->session->userdata('logged_in')) {
+            redirect('admin/adminLogin');
+        } else {
+            $this->load->view("inc/resources_header");
+            $this->load->view("inc/admin_navigation");
+            $this->load->view('pages/admin/administrators');
+            $this->load->view('inc/admin_footer');
+        }
     }
 
-    public function readAdmin($id)
+    public function populate_system_admins()
     {
-        $data['admin'] = $this->Administrator_model->readAdmin($id);
+        $response = array(
+            'system_admins' => $this->Administrator_model->get_systemAdmins()
+        );
+        echo json_encode($response);
     }
 
-    public function updateAdmin($id)
-    {
-        $data = [
-            'username' => $this->input->post('admin_username'),
-            'password' => md5($this->input->post('admin_password'))
-        ];
-        $this->Administrator_model->updateAdmin($id, $data);
-    }
-
-    public function deleteAdmin($id)
-    {
-        $this->Administrator_model->deleteAdmin($id);
-    }
 }
