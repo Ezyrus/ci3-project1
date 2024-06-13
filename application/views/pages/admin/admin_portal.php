@@ -10,7 +10,7 @@
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                <?php echo form_open("admin/login"); ?>
+                <?php echo form_open("adminPages/login"); ?>
                 <div class="input-group mb-3">
                     <input type="text" id="admin_username" name="admin_username" class="form-control"
                         placeholder="Username" required>
@@ -30,11 +30,9 @@
                     </div>
                 </div>
                 <div class="row mb-1">
-
                     <div class="col">
                         <button type="submit" class="btn btn-outline-success btn-block">Sign In</button>
                     </div>
-
                 </div>
                 <?php echo form_close(); ?>
                 <p class="mb-0">

@@ -77,7 +77,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="<?php echo site_url('admin/dashboard'); ?>" class="nav-link">
+                            <a href="<?php echo site_url('adminPages/goToDashboard'); ?>" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -101,7 +101,7 @@
                         </li>
                         <li class="nav-header">System</li>
                         <li class="nav-item">
-                            <a href="<?php echo site_url('admin/administrators'); ?>" class="nav-link">
+                            <a href="<?php echo site_url('adminPages/goToAdministrators'); ?>" class="nav-link">
                                 <i class="nav-icon fa-solid fa-user"></i>
                                 <p>Administrators <span class="badge badge-success right">1</span></p>
                             </a>
@@ -125,7 +125,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo site_url('admin/logout'); ?>" class="nav-link">
+                            <a href="<?php echo site_url('adminPages/logout'); ?>" class="nav-link">
                                 <i class="nav-icon fa-solid fa-right-from-bracket"></i>
                                 <p>Logout <span class="badge badge-success right">1</span></p>
                             </a>
