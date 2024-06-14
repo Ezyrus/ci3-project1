@@ -115,25 +115,25 @@
 
                 <div class="row mb-2">
                     <div class="col">
-                        <label for="fullname">Full Name</label>
-                        <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full Name"
-                            required>
+                        <label for="createFullName_systemAdmin">Full Name</label>
+                        <input type="text" class="form-control" id="createFullName_systemAdmin"
+                            name="createFullName_systemAdmin" placeholder="Full Name" required>
                     </div>
                 </div>
 
                 <div class="row mb-2">
                     <div class="col">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username"
-                            required>
+                        <label for="createUsername_systemAdmin">Username</label>
+                        <input type="text" class="form-control" id="createUsername_systemAdmin"
+                            name="createUsername_systemAdmin" placeholder="Username" required>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-                            required>
+                        <label for="createPassword_systemAdmin">Password</label>
+                        <input type="password" class="form-control" id="createPassword_systemAdmin"
+                            name="createPassword_systemAdmin" placeholder="Password" required>
                     </div>
                 </div>
 
@@ -277,7 +277,7 @@
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <?php echo form_open("operations/update/administrators"); ?>
+            <?php echo form_open("operations/update/administrators", ['id' => 'updateForm_systemAdmin']); ?>
             <div class="modal-header bg-primary">
                 <h1 class="modal-title fs-5 text-center">Update System Administrator</h1>
             </div>
@@ -523,6 +523,52 @@
         });
     });
 
+    // Create Admin: Submit Fields
+    $("#createForm_systemAdmin").on("submit", function (e) {
+        e.preventDefault();
+        $.ajax({
+            // data: $(this).serialize(),
+            // contentType: "application/x-www-form-urlencoded; charset=UTF-8", //default
+            // processData: true, //default
+
+            data: new FormData(this), //multipart/form-data
+            contentType: false,
+            processData: false,
+            type: "POST",
+            url: "../server/create_admin.php",
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer token"
+            },
+            // statusCode: {
+            //     404: function () {
+            //         toastr.error("Status 404: URL Not Found")
+            //     },
+            //     500: function () {
+            //         toastr.error("Status 500: Server Error")
+            //     }
+            // },
+            success: function (responseData) {
+                if (responseData.status) {
+                    $('#reloadOverlay').show();
+                    $('#table_systemAdmins').DataTable().ajax.reload(function () {
+                        $('#reloadOverlay').hide();
+                        toastr.success(responseData.message)
+
+                        createLogs(responseData.logsData.admin_id, responseData.logsData.action, responseData.logsData.description)
+                    });
+                    $('#createModal_systemAdmin').modal('hide'); // Hide modal
+                    $(this).trigger("reset"); // Reset form
+                } else {
+                    toastr.error(responseData.message)
+                }
+            },
+            error: function (xhr, status, error) {
+                toastr.error("Error occured please contact developers immediately.")
+            }
+        })
+    })
+
     // Read Admin: Populate Fields
     $(document).on('click', 'button[data-role=readBtn_systemAdmin]', function () {
         const adminId = $(this).attr('data-id');
@@ -533,9 +579,9 @@
             type: 'GET',
             dataType: 'json',
             success: function (responseData) {
-                $('#readFullName_systemAdmin').val(responseData.fullname);
-                $('#readUsername_systemAdmin').val(responseData.username);
-                $('#readId_systemAdmin').val(responseData.admin_id);
+                $('#readFullName_systemAdmin').val(responseData.data.fullname);
+                $('#readUsername_systemAdmin').val(responseData.data.username);
+                $('#readId_systemAdmin').val(responseData.data.admin_id);
             },
             error: function (xhr, status, error) {
                 toastr.error("Error occurred, please contact developers immediately.");
@@ -553,14 +599,81 @@
             type: 'GET',
             dataType: 'json',
             success: function (responseData) {
-                $('#updateFullName_systemAdmin').val(responseData.fullname);
-                $('#updateUsername_systemAdmin').val(responseData.username);
-                $('#updateId_systemAdmin').val(responseData.admin_id);
+                $('#updateFullName_systemAdmin').val(responseData.data.fullname);
+                $('#updateUsername_systemAdmin').val(responseData.data.username);
+                $('#updateId_systemAdmin').val(responseData.data.admin_id);
             },
             error: function (xhr, status, error) {
                 toastr.error("Error occured please contact developers immediately.")
             }
         })
+    })
+
+    // Update Admin: Update Fields
+    $("#updateForm_systemAdmin").on("submit", function (e) {
+        e.preventDefault();
+        const adminId = $('#updateId_systemAdmin').val();
+        const table = 'administrators';
+        $.ajax({
+            url: '<?php echo site_url('operations/update'); ?>/' + adminId + '/' + table,
+            type: 'POST',
+            data: new FormData(this),
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (responseData) {
+                if (responseData.status) {
+                    toastr.success(responseData.message);
+                    $('#updateModal_systemAdmin').modal('hide');
+                } else {
+                    toastr.error(responseData.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                toastr.error("Error occurred, please contact developers immediately.");
+            }
+        });
+    });
+
+
+    $(document).on('click', 'button[data-role=deleteBtn_systemAdmin]', function () {
+        var deleteId_systemAdmin = $(this).attr('data-id');
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to retrieve ADMIN" + deleteId_systemAdmin + " after doing this action.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete ADMIN " + deleteId_systemAdmin + "!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '../server/delete_admin.php',
+                    type: 'POST',
+                    data: {
+                        "deleteId_systemAdmin": deleteId_systemAdmin
+                    },
+                    dataType: 'json',
+                    success: function (responseData) {
+                        if (responseData.status) {
+                            $('#reloadOverlay').show();
+                            $('#table_systemAdmins').DataTable().ajax.reload(function () {
+                                $('#reloadOverlay').hide();
+                                toastr.success(responseData.message);
+
+                                createLogs(responseData.logsData.admin_id, responseData.logsData.action, responseData.logsData.description)
+                            });
+                        } else {
+                            toastr.error(responseData.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("Error occurred. Please contact developers immediately.");
+                    }
+                });
+            }
+        });
     })
 
 </script>

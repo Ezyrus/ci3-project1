@@ -11,9 +11,16 @@ class operationsModel extends CI_Model {
         return $this->db->insert($table, $data);
     }
 
+    //TODO: remove column-specific name make it dynamic
     public function get_data($table, $id) {
-        $query = $this->db->get_where($table, ['admin_id' => $id]);
+        $query = $this->db->get_where($table, ['admin_id' => $id]); 
         return $query->row_array();
+    }
+
+        //TODO: remove column-specific name make it dynamic
+    public function update_data($table, $id, $data) {
+        $this->db->where('admin_id', $id);
+        return $this->db->update($table, $data);
     }
 }
 

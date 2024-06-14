@@ -10,7 +10,11 @@ class operations extends CI_Controller
     }
     public function create($table)
     {
-        $data = $this->input->post();
+        $data = [
+            'fullname' => $this->input->post('createFullName_systemAdmin', true),
+            'username' => $this->input->post('createUsername_systemAdmin', true),
+            'password' => $this->input->post('createPassword_systemAdmin', true)
+        ];
 
         if ($this->operationsModel->insert_data($table, $data)) {
             $this->session->set_flashdata('success', 'Record added successfully.');
@@ -22,13 +26,32 @@ class operations extends CI_Controller
 
     public function update($id, $table)
     {
+        $data = [
+            'fullname' => $this->input->post('updateFullName_systemAdmin', true),
+            'username' => $this->input->post('updateUsername_systemAdmin', true),
+            'admin_id' => $id
+        ];
 
+        if ($this->operationsModel->update_data($table, $id, $data)) {
+            echo json_encode(['status' => true, 'message' => 'Update successful']);
+        } else {
+            echo json_encode(['status' => false, 'message' => 'Update failed']);
+        }
     }
 
     public function read($id, $table)
     {
-        $data = $this->operationsModel->get_data($table, $id);
-        echo json_encode($data);
+        $data = [
+            'fullname' => $this->input->post('readFullName_systemAdmin'),
+            'username' => $this->input->post('readUsername_systemAdmin'),
+            'admin_id' => $id
+        ];
+        
+        if ($data = $this->operationsModel->get_data($table, $id)) {
+            echo json_encode(['status' => true, 'message' => 'Read successful', 'data' => $data]);
+        } else {
+            echo json_encode(['status' => false, 'message' => 'Read failed']);
+        }
     }
 
     public function delete($id, $table)
