@@ -540,14 +540,6 @@
             headers: {
                 "Authorization": "Bearer token"
             },
-            // statusCode: {
-            //     404: function () {
-            //         toastr.error("Status 404: URL Not Found")
-            //     },
-            //     500: function () {
-            //         toastr.error("Status 500: Server Error")
-            //     }
-            // },
             success: function (responseData) {
                 if (responseData.status) {
                     $('#reloadOverlay').show();
@@ -635,9 +627,11 @@
         });
     });
 
-
+    // Delete 
+    Admin: Delete Fields
     $(document).on('click', 'button[data-role=deleteBtn_systemAdmin]', function () {
         var deleteId_systemAdmin = $(this).attr('data-id');
+        var table = 'administrators'
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to retrieve ADMIN" + deleteId_systemAdmin + " after doing this action.",
@@ -649,21 +643,12 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '../server/delete_admin.php',
+                    url: '<?php echo site_url('operations/delete'); ?>/' + deleteId_systemAdmin + '/' + table,
                     type: 'POST',
-                    data: {
-                        "deleteId_systemAdmin": deleteId_systemAdmin
-                    },
                     dataType: 'json',
                     success: function (responseData) {
                         if (responseData.status) {
-                            $('#reloadOverlay').show();
-                            $('#table_systemAdmins').DataTable().ajax.reload(function () {
-                                $('#reloadOverlay').hide();
-                                toastr.success(responseData.message);
-
-                                createLogs(responseData.logsData.admin_id, responseData.logsData.action, responseData.logsData.description)
-                            });
+                            toastr.success(responseData.message);
                         } else {
                             toastr.error(responseData.message);
                         }

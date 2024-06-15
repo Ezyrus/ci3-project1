@@ -22,6 +22,13 @@ class operationsModel extends CI_Model {
         $this->db->where('admin_id', $id);
         return $this->db->update($table, $data);
     }
+
+    public function delete_data($table, $id) {
+        $this->db->where('admin_id', $id);
+        return $this->db->delete($table);
+    }
+
+    
 }
 
 

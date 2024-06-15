@@ -10,10 +10,16 @@ class operations extends CI_Controller
     }
     public function create($table)
     {
+        
+
+
+        $password = $this->input->post('createPassword_systemAdmin', true);
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
         $data = [
             'fullname' => $this->input->post('createFullName_systemAdmin', true),
             'username' => $this->input->post('createUsername_systemAdmin', true),
-            'password' => $this->input->post('createPassword_systemAdmin', true)
+            'password' => $hashed_password
         ];
 
         if ($this->operationsModel->insert_data($table, $data)) {
@@ -56,7 +62,11 @@ class operations extends CI_Controller
 
     public function delete($id, $table)
     {
-
+        if($this->operationsModel->delete_data($table, $id)) {
+            echo json_encode(['status' => true, 'message' => 'Delete successful']);
+        } else {
+            echo json_encode(['status' => false, 'message' => 'Delete failed']);
+        }   
     }
 
 }
