@@ -6,3 +6,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route["admin_portal"] = "adminPages/goToAdminPortal";
 $route["dashboard"] = "adminPages/goToDashboard";
 $route["administrators"] = "adminPages/goToAdministrators";
+
+$route["(:any)"] = "adminPages/$1";
+
+

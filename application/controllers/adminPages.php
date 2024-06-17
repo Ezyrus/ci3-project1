@@ -55,7 +55,7 @@ class adminPages extends CI_Controller
 
             if ($validationResponse["status"]) {
                 $adminLogged = array(
-                    'admin_id' => $validationResponse['data']['admin_id'],
+                    'id' => $validationResponse['data']['id'],
                     'admin_fullname' => $validationResponse['data']['fullname'],
                     'admin_username' => $validationResponse['data']['username'],
                     'logged_in' => TRUE

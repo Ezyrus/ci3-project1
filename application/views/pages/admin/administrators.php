@@ -28,9 +28,9 @@
             <div class="row">
                 <div class="col">
                     <div class="card card-primary card-secondary">
-                        <div class="overlay" id="reloadOverlay">
+                        <!-- <div class="overlay" id="reloadOverlay">
                             <i class="fas fa-3x fa-sync-alt"></i>
-                        </div>
+                        </div> -->
 
                         <div class="card-body">
                             <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal"
@@ -50,7 +50,7 @@
                                 <tbody>
                                     <?php foreach ($systemAdmins as $admin): ?>
                                         <tr>
-                                            <td><?php echo $admin['admin_id']; ?></td>
+                                            <td><?php echo $admin['id']; ?></td>
                                             <td><?php echo $admin['fullname']; ?></td>
                                             <td><?php echo $admin['username']; ?></td>
                                             <td><?php echo $admin['password']; ?></td>
@@ -59,19 +59,19 @@
                                                     aria-label="System Administrator Actions">
                                                     <button type="button" class="btn bg-secondary" data-bs-toggle="modal"
                                                         data-bs-target="#readModal_systemAdmin"
-                                                        data-id="<?php echo $admin['admin_id']; ?>"
+                                                        data-id="<?php echo $admin['id']; ?>"
                                                         data-role="readBtn_systemAdmin">
                                                         <i class="fa-solid fa-eye fa-xl" style="color: white;"></i>
                                                     </button>
                                                     <button type="button" class="btn bg-primary" data-bs-toggle="modal"
                                                         data-bs-target="#updateModal_systemAdmin"
-                                                        data-id="<?php echo $admin['admin_id']; ?>"
+                                                        data-id="<?php echo $admin['id']; ?>"
                                                         data-role="updateBtn_systemAdmin">
                                                         <i class="fa-solid fa-pen-to-square fa-xl"
                                                             style="color: white;"></i>
                                                     </button>
                                                     <button type="button" class="btn bg-danger"
-                                                        data-id="<?php echo $admin['admin_id']; ?>"
+                                                        data-id="<?php echo $admin['id']; ?>"
                                                         data-role="deleteBtn_systemAdmin">
                                                         <i class="fa-solid fa-trash fa-xl" style="color: white;"></i>
                                                     </button>
@@ -97,13 +97,13 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <?php echo form_open("operations/create/administrators"); ?>
-            <div class="modal-header bg-success">
-                <h1 class="modal-title fs-5 text-center">Add System Administrator</h1>
-            </div>
+            <form id="createForm_systemAdmin">
+                <div class="modal-header bg-success">
+                    <h1 class="modal-title fs-5 text-center">Add System Administrator</h1>
+                </div>
 
-            <div class="modal-body">
-                <!-- <div class="row mb-2">
+                <div class="modal-body">
+                    <!-- <div class="row mb-2">
                         <div class="col">
                             <label for="createPicturePreview_systemAdmin">Picture: </label>
                             <span id="createPictureFileName" class="text-muted font-weight-normal font-italic"></span>
@@ -113,39 +113,39 @@
                         </div>
                     </div> -->
 
-                <div class="row mb-2">
-                    <div class="col">
-                        <label for="createFullName_systemAdmin">Full Name</label>
-                        <input type="text" class="form-control" id="createFullName_systemAdmin"
-                            name="createFullName_systemAdmin" placeholder="Full Name" required>
+                    <div class="row mb-2">
+                        <div class="col">
+                            <label for="createFullName_systemAdmin">Full Name</label>
+                            <input type="text" class="form-control" id="createFullName_systemAdmin"
+                                name="createFullName_systemAdmin" placeholder="Full Name" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-2">
-                    <div class="col">
-                        <label for="createUsername_systemAdmin">Username</label>
-                        <input type="text" class="form-control" id="createUsername_systemAdmin"
-                            name="createUsername_systemAdmin" placeholder="Username" required>
+                    <div class="row mb-2">
+                        <div class="col">
+                            <label for="createUsername_systemAdmin">Username</label>
+                            <input type="text" class="form-control" id="createUsername_systemAdmin"
+                                name="createUsername_systemAdmin" placeholder="Username" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col">
-                        <label for="createPassword_systemAdmin">Password</label>
-                        <input type="password" class="form-control" id="createPassword_systemAdmin"
-                            name="createPassword_systemAdmin" placeholder="Password" required>
+                    <div class="row">
+                        <div class="col">
+                            <label for="createPassword_systemAdmin">Password</label>
+                            <input type="password" class="form-control" id="createPassword_systemAdmin"
+                                name="createPassword_systemAdmin" placeholder="Password" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-2">
-                    <div class="col">
-                        <input type="checkbox" id="togglePassword">
-                        <label class="form-check-label" for="togglePassword"><b>Show
-                                Password</b></label>
+                    <div class="row mb-2">
+                        <div class="col">
+                            <input type="checkbox" id="togglePassword">
+                            <label class="form-check-label" for="togglePassword"><b>Show
+                                    Password</b></label>
+                        </div>
                     </div>
-                </div>
 
-                <!-- <div class="row">
+                    <!-- <div class="row">
                         <div class="col">
                             <label for="createType_systemAdmin">Type
                                 <span class="d-inline-block " tabindex="0" data-toggle="tooltip"
@@ -160,13 +160,13 @@
                             </select>
                         </div>
                     </div> -->
-            </div>
+                </div>
 
-            <div class="modal-footer justify-content-between bg-gray-light">
-                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success" id="createSubmitBtn_admin">Submit</button>
-            </div>
-            <?php echo form_close(); ?>
+                <div class="modal-footer justify-content-between bg-gray-light">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" id="createSubmitBtn_admin">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -377,7 +377,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#reloadOverlay').hide();
+        // $('#reloadOverlay').hide();
 
         // $('#table_systemAdmins').DataTable({
         //     buttons: [{
@@ -494,7 +494,7 @@
         //         dataSrc: 'system_admins'
         //     },
         //     columns: [{
-        //         data: 'admin_id',
+        //         data: 'id',
         //         render: function (data, type, row) {
         //             return ' <span class="badge badge-secondary">ADMIN' + data + "</span>";
         //         }
@@ -508,9 +508,9 @@
         //         data: null,
         //         render: function (data, type, row) {
         //             return '<div class="btn-group" role="group" aria-label="System Administrator Actions">' +
-        //                 '<button type="button" class="btn bg-secondary" data-bs-toggle="modal" data-bs-target="#readModal_systemAdmin" data-id="' + row.admin_id + '" data-role="readBtn_systemAdmin"><i class="fa-solid fa-eye fa-xl" style="color: white;"></i></button>' +
-        //                 '<button type="button" class="btn bg-primary" data-bs-toggle="modal" data-bs-target="#updateModal_systemAdmin" data-id="' + row.admin_id + '" data-role="updateBtn_systemAdmin"><i class="fa-solid fa-pen-to-square fa-xl" style="color: white;"></i></button>' +
-        //                 '<button type="button" class="btn bg-danger" data-id="' + row.admin_id + '" data-role="deleteBtn_systemAdmin"><i class="fa-solid fa-trash fa-xl" style="color: white;"></i></button>' +
+        //                 '<button type="button" class="btn bg-secondary" data-bs-toggle="modal" data-bs-target="#readModal_systemAdmin" data-id="' + row.id + '" data-role="readBtn_systemAdmin"><i class="fa-solid fa-eye fa-xl" style="color: white;"></i></button>' +
+        //                 '<button type="button" class="btn bg-primary" data-bs-toggle="modal" data-bs-target="#updateModal_systemAdmin" data-id="' + row.id + '" data-role="updateBtn_systemAdmin"><i class="fa-solid fa-pen-to-square fa-xl" style="color: white;"></i></button>' +
+        //                 '<button type="button" class="btn bg-danger" data-id="' + row.id + '" data-role="deleteBtn_systemAdmin"><i class="fa-solid fa-trash fa-xl" style="color: white;"></i></button>' +
         //                 '</div>';
         //         }
         //     }]
@@ -522,58 +522,41 @@
             passwordField.attr("type", isChecked ? "text" : "password");
         });
     });
+    const table = 'administrators';
 
     // Create Admin: Submit Fields
     $("#createForm_systemAdmin").on("submit", function (e) {
         e.preventDefault();
         $.ajax({
-            // data: $(this).serialize(),
-            // contentType: "application/x-www-form-urlencoded; charset=UTF-8", //default
-            // processData: true, //default
-
-            data: new FormData(this), //multipart/form-data
-            contentType: false,
-            processData: false,
+            data: $(this).serialize(),
             type: "POST",
-            url: "../server/create_admin.php",
+            url: "<?php echo site_url('operations/create/'); ?>" + table,
             dataType: "json",
-            headers: {
-                "Authorization": "Bearer token"
-            },
             success: function (responseData) {
                 if (responseData.status) {
-                    $('#reloadOverlay').show();
-                    $('#table_systemAdmins').DataTable().ajax.reload(function () {
-                        $('#reloadOverlay').hide();
-                        toastr.success(responseData.message)
-
-                        createLogs(responseData.logsData.admin_id, responseData.logsData.action, responseData.logsData.description)
-                    });
+                    toastr.success(responseData.message)
                     $('#createModal_systemAdmin').modal('hide'); // Hide modal
-                    $(this).trigger("reset"); // Reset form
                 } else {
                     toastr.error(responseData.message)
                 }
             },
             error: function (xhr, status, error) {
-                toastr.error("Error occured please contact developers immediately.")
+                toastr.error("Error occurred, please contact developers immediately.")
             }
         })
-    })
+    });
 
     // Read Admin: Populate Fields
     $(document).on('click', 'button[data-role=readBtn_systemAdmin]', function () {
-        const adminId = $(this).attr('data-id');
-        const table = 'administrators';
-
-        $.ajax({
-            url: '<?php echo site_url('operations/read'); ?>/' + adminId + '/' + table,
+        const id = $(this).attr('data-id'); //Row's ID
+        $.ajax({    
+            url: '<?php echo site_url('operations/read/'); ?>' + id + '/' + table,
             type: 'GET',
             dataType: 'json',
             success: function (responseData) {
                 $('#readFullName_systemAdmin').val(responseData.data.fullname);
                 $('#readUsername_systemAdmin').val(responseData.data.username);
-                $('#readId_systemAdmin').val(responseData.data.admin_id);
+                $('#readId_systemAdmin').val(responseData.data.id);
             },
             error: function (xhr, status, error) {
                 toastr.error("Error occurred, please contact developers immediately.");
@@ -583,17 +566,15 @@
 
     // Update Admin: Populate Fields
     $(document).on('click', 'button[data-role=updateBtn_systemAdmin]', function () {
-        const adminId = $(this).attr('data-id');
-        const table = 'administrators';
-
+        const id = $(this).attr('data-id'); //Row's ID
         $.ajax({
-            url: '<?php echo site_url('operations/read'); ?>/' + adminId + '/' + table,
+            url: '<?php echo site_url('operations/read/'); ?>'+ id + '/' + table,
             type: 'GET',
             dataType: 'json',
             success: function (responseData) {
                 $('#updateFullName_systemAdmin').val(responseData.data.fullname);
                 $('#updateUsername_systemAdmin').val(responseData.data.username);
-                $('#updateId_systemAdmin').val(responseData.data.admin_id);
+                $('#updateId_systemAdmin').val(responseData.data.id);
             },
             error: function (xhr, status, error) {
                 toastr.error("Error occured please contact developers immediately.")
@@ -604,15 +585,12 @@
     // Update Admin: Update Fields
     $("#updateForm_systemAdmin").on("submit", function (e) {
         e.preventDefault();
-        const adminId = $('#updateId_systemAdmin').val();
-        const table = 'administrators';
+        const id = $('#updateId_systemAdmin').val(); //Field's ID
         $.ajax({
-            url: '<?php echo site_url('operations/update'); ?>/' + adminId + '/' + table,
+            url: '<?php echo site_url('operations/update/'); ?>' + id + '/' + table,
             type: 'POST',
-            data: new FormData(this),
+            data: $(this).serialize(),
             dataType: 'json',
-            contentType: false,
-            processData: false,
             success: function (responseData) {
                 if (responseData.status) {
                     toastr.success(responseData.message);
@@ -627,23 +605,21 @@
         });
     });
 
-    // Delete 
-    Admin: Delete Fields
+    // Delete  Admin: Delete Fields
     $(document).on('click', 'button[data-role=deleteBtn_systemAdmin]', function () {
-        var deleteId_systemAdmin = $(this).attr('data-id');
-        var table = 'administrators'
+        const id = $(this).attr('data-id'); //Row's ID
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to retrieve ADMIN" + deleteId_systemAdmin + " after doing this action.",
+            text: "You won't be able to retrieve ADMIN" + id + " after doing this action.",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "Yes, delete ADMIN " + deleteId_systemAdmin + "!",
+            confirmButtonText: "Yes, delete ADMIN " + id + "!",
             cancelButtonText: "No, cancel!",
             reverseButtons: true,
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '<?php echo site_url('operations/delete'); ?>/' + deleteId_systemAdmin + '/' + table,
+                    url: '<?php echo site_url('operations/delete/'); ?>' + id + '/' + table,
                     type: 'POST',
                     dataType: 'json',
                     success: function (responseData) {

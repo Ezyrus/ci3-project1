@@ -13,19 +13,28 @@ class operationsModel extends CI_Model {
 
     //TODO: remove column-specific name make it dynamic
     public function get_data($table, $id) {
-        $query = $this->db->get_where($table, ['admin_id' => $id]); 
+        $query = $this->db->get_where($table, ['id' => $id]); 
         return $query->row_array();
     }
 
-        //TODO: remove column-specific name make it dynamic
+    //TODO: remove column-specific name make it dynamic
     public function update_data($table, $id, $data) {
-        $this->db->where('admin_id', $id);
+        $this->db->where('id', $id);
         return $this->db->update($table, $data);
     }
 
+     //TODO: remove column-specific name make it dynamic
     public function delete_data($table, $id) {
-        $this->db->where('admin_id', $id);
+        $this->db->where('id', $id);
         return $this->db->delete($table);
+    }
+
+         //TODO: remove column-specific name make it dynamic
+    public function is_duplicate($table, $data) {
+        $this->db->where('username', $data);
+        $query = $this->db->get($table);
+
+        return $query->num_rows() > 0;
     }
 
     

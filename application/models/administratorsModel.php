@@ -11,7 +11,7 @@ class administratorsModel extends CI_Model
 
     public function adminLogInValidation($username, $password)
     {
-        $query = $this->db->get_where('administrators', ['username' => $username]);
+        $query = $this->db->get_where('administrators', ['username' => $username], true);
         $admin = $query->row_array();
 
         if ($admin) {
@@ -37,7 +37,7 @@ class administratorsModel extends CI_Model
 
     public function getSystemAdministrators()
     {
-        $this->db->order_by('admin_id', 'DESC');
+        $this->db->order_by('id', 'DESC');
         $query = $this->db->get('administrators');
         return $query->result_array();
     }
